@@ -7,7 +7,7 @@
 #include <ctype.h>
 #include <errno.h>
 
-#include "dlist.h"
+#include <dlist.h>
 
 #ifndef DLIST_NOASSERT
 #include <assert.h>
