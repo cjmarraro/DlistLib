@@ -286,10 +286,10 @@ bool test_iterate_remove(struct dlist *list, void **keys)
             return false;
         }
         iter = dlist_iter_remove(list, iter);
-        // if (test_dlist_get_data(list, key) != NULL) {
-        //     printf("iter_remove failed on entry #%zu\n", i);
-        //     return false;
-        //}
+        if (test_dlist_get_data(list, key) != key) {
+            printf("iter_remove failed on entry #%zu\n", i);
+            return false;
+        }
     }
     if (i != (TEST_NUM_KEYS)) {
         printf("did not iterate through all entries: "
