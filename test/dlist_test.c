@@ -279,9 +279,9 @@ bool test_iterate_remove(struct dlist *list, void **keys)
     void *key;
 
     while (iter) {
-        ++i;
-        key = (char *)test_dlist_iter_get_data(iter);
-        if ((char *)test_dlist_get_data(list, key) != (key)) {
+        i++;
+        key = test_dlist_iter_get_data(iter);
+        if (test_dlist_get_data(list, key) != (key)) {
             printf("invalid iterator on entry #%zu\n", i);
             return false;
         }

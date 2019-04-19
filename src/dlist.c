@@ -26,18 +26,20 @@ struct dlist_node
 /**** Utility Functions ****/
 
 /* Access pointer to current entry */
-static inline struct dlist_node *dlist_get_entry(const
+static struct dlist_node *dlist_get_entry(const
     struct dlist *list, struct dlist_node *entry)
-{   
-    while (entry->next) 
-            return entry;
+{  
+    struct dlist_node *cur = entry; 
+    while (cur->next) {
+        return cur;
+    }
     return NULL;
 }
 
 /* Generic search func for a given key. 
  * Returns NULL if key is invalid.
 */
-static inline struct dlist_node *dlist_find_entry(const struct dlist *list, 
+static struct dlist_node *dlist_find_entry(const struct dlist *list, 
     const void *key)
 {
     struct dlist_node *entry = list->head;
@@ -52,37 +54,35 @@ static inline struct dlist_node *dlist_find_entry(const struct dlist *list,
 }
 
 
-static inline void dlist_remove_entry(struct dlist *list, 
-    struct dlist_node *del_entry)
+static void dlist_remove_entry(struct dlist *list, 
+     struct dlist_node *del_entry)
 {
-    del_entry = list->head;
-    if (list->key_free)  {
-        list->key_free(del_entry->data);
-        list->num_entries--;
-    }
-    
     struct dlist_node *prev = del_entry->prev;
     struct dlist_node *next = del_entry->next;
+    if (list->key_free)  {
+        list->key_free(del_entry->data);
+    } 
 
     if (prev) {
         if (next) {
-            prev->next = next;
-            next->prev = prev;
+            prev->next = del_entry->next;
+            next->prev = del_entry->prev;
         } else {
             prev->next = 0;
-            list->tail = prev;
+            list->tail = del_entry->prev;
         }
     } else {
         if (next) {
             next->prev = 0;
-            list->head = next;
+            list->head = del_entry->next;
         } else {
             list->head = 0;
             list->tail = 0;
         }
     }
+
     free (del_entry);
-    list->num_entries--;
+    list->num_entries--;    
 }
 
 
@@ -166,7 +166,7 @@ void *dlist_get_data(struct dlist *list, void *data)
      struct dlist_node *entry;
 
      DLIST_ASSERT(list != NULL);
-     DLIST_ASSERT(data != NULL);
+     //DLIST_ASSERT(data != NULL);
 
      entry = dlist_find_entry(list, data);
      if (!entry) return NULL;
@@ -290,12 +290,14 @@ struct dlist_iter *dlist_iter_remove(struct dlist *list,
 
     DLIST_ASSERT(list != NULL);
 
-    if (!iter) return NULL;
+    if (!iter) return NULL;  
+
+    if (!entry) 
+    /* Iterator is invalid, so just return the next valid entry */
+        return dlist_iter_next(list, iter);  
  
     return (struct dlist_iter *) dlist_get_entry(list, entry->next);
-    dlist_remove_entry(list, entry);
-
-
+        (dlist_remove_entry(list, entry));    
 }
 
 const void *dlist_iter_get_key(struct dlist_iter *iter)

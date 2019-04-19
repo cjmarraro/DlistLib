@@ -1,0 +1,3 @@
+/mnt/c/myProjects/github/DListLib/DlistLib/test/CMakeFiles/rebuild_cache.dir
+/mnt/c/myProjects/github/DListLib/DlistLib/test/CMakeFiles/dlist_test.dir
+/mnt/c/myProjects/github/DListLib/DlistLib/test/CMakeFiles/edit_cache.dir

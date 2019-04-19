@@ -1,0 +1,1 @@
+/usr/bin/cc  -g -Wall -Wunused -Werror  -rdynamic CMakeFiles/dlist_test.dir/mnt/c/myProjects/github/DListLib/DlistLib/src/dlist.c.o CMakeFiles/dlist_test.dir/dlist_test.c.o  -o dlist_test 
