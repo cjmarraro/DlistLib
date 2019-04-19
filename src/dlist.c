@@ -166,7 +166,7 @@ void *dlist_get_data(struct dlist *list, void *data)
      struct dlist_node *entry;
 
      DLIST_ASSERT(list != NULL);
-     //DLIST_ASSERT(data != NULL);
+     DLIST_ASSERT(data != NULL);
 
      entry = dlist_find_entry(list, data);
      if (!entry) return NULL;
